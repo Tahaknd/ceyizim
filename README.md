@@ -55,12 +55,12 @@ xcodebuild -project Ceyizim.xcodeproj -scheme Ceyizim -destination 'platform=iOS
 ## Gizlilik / destek sayfalarını yayınlama (GitHub Pages)
 `docs/` klasörü GitHub Pages için hazır: `docs/index.html` (tanıtım), `docs/gizlilik/index.html`, `docs/destek/index.html`.
 
-`tahacaliskan/ceyizim` adlı bir GitHub reposu aç, projeyi push et, ardından **Settings > Pages > Source = `main` dalı + `/docs` klasörü** seç. Adresler tam olarak `AppSettings.swift` içindeki URL'lere denk gelir:
+`tahaknd/ceyizim` adlı bir GitHub reposu aç, projeyi push et, ardından **Settings > Pages > Source = `main` dalı + `/docs` klasörü** seç. Adresler tam olarak `AppSettings.swift` içindeki URL'lere denk gelir:
 
 | Sayfa | Adres |
 |---|---|
-| Tanıtım (Marketing URL) | `https://tahacaliskan.github.io/ceyizim/` |
-| Gizlilik politikası | `https://tahacaliskan.github.io/ceyizim/gizlilik` |
-| Destek | `https://tahacaliskan.github.io/ceyizim/destek` |
+| Tanıtım (Marketing URL) | `https://tahaknd.github.io/ceyizim/` |
+| Gizlilik politikası | `https://tahaknd.github.io/ceyizim/gizlilik` |
+| Destek | `https://tahaknd.github.io/ceyizim/destek` |
 
 Repo adı `ceyizim` DIŞINDA bir şey olursa adresler kayar; o durumda `AppSettings.swift` ve `metadata.md` içindeki iki URL'yi güncelle. E-posta `ceyizim.app@gmail.com` bir öneridir; kendi adresinle değiştir.

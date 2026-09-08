@@ -11,8 +11,8 @@ enum SettingsKeys {
 
 enum AppConfig {
     static let appName = "Çeyizim"
-    static let privacyPolicyURL = URL(string: "https://tahacaliskan.github.io/ceyizim/gizlilik")!
-    static let supportURL = URL(string: "https://tahacaliskan.github.io/ceyizim/destek")!
+    static let privacyPolicyURL = URL(string: "https://tahaknd.github.io/ceyizim/gizlilik")!
+    static let supportURL = URL(string: "https://tahaknd.github.io/ceyizim/destek")!
     static let supportEmail = "ceyizim.app@gmail.com"
 
     static var versionText: String {

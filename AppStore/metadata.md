@@ -46,8 +46,8 @@ Mutlu yuvana giden yolda yanındayız. 🌸
 çeyiz,çeyiz listesi,düğün,gelin,evlilik,harcama,alışveriş listesi,ev eşyası,hediye,planlayıcı
 
 ## URL'ler (ZORUNLU — yayına almadan önce gerçek adreslerle değiştir)
-- **Gizlilik politikası URL:** https://tahacaliskan.github.io/ceyizim/gizlilik  (`AppConfig.privacyPolicyURL`)
-- **Destek URL:** https://tahacaliskan.github.io/ceyizim/destek  (`AppConfig.supportURL`)
+- **Gizlilik politikası URL:** https://tahaknd.github.io/ceyizim/gizlilik  (`AppConfig.privacyPolicyURL`)
+- **Destek URL:** https://tahaknd.github.io/ceyizim/destek  (`AppConfig.supportURL`)
 - **Pazarlama URL:** isteğe bağlı
 
 ## Yaş derecelendirmesi
