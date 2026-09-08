@@ -63,4 +63,4 @@ xcodebuild -project Ceyizim.xcodeproj -scheme Ceyizim -destination 'platform=iOS
 | Gizlilik politikası | `https://tahaknd.github.io/ceyizim/gizlilik` |
 | Destek | `https://tahaknd.github.io/ceyizim/destek` |
 
-Repo adı `ceyizim` DIŞINDA bir şey olursa adresler kayar; o durumda `AppSettings.swift` ve `metadata.md` içindeki iki URL'yi güncelle. E-posta `ceyizim.app@gmail.com` bir öneridir; kendi adresinle değiştir.
+Repo adı `ceyizim` DIŞINDA bir şey olursa adresler kayar; o durumda `AppSettings.swift` ve `metadata.md` içindeki iki URL'yi güncelle. E-posta `tahakndcaliskan@gmail.com` bir öneridir; kendi adresinle değiştir.

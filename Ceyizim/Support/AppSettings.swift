@@ -13,7 +13,7 @@ enum AppConfig {
     static let appName = "Çeyizim"
     static let privacyPolicyURL = URL(string: "https://tahaknd.github.io/ceyizim/gizlilik")!
     static let supportURL = URL(string: "https://tahaknd.github.io/ceyizim/destek")!
-    static let supportEmail = "ceyizim.app@gmail.com"
+    static let supportEmail = "tahakndcaliskan@gmail.com"
 
     static var versionText: String {
         let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"

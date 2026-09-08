@@ -28,10 +28,10 @@ Uygulama 13 yaş altı çocuklara yönelik değildir ve kimseden kişisel veri t
 Bu politika güncellenirse yeni sürüm bu sayfada yayımlanır.
 
 ## İletişim
-Sorularınız için: ceyizim.app@gmail.com
+Sorularınız için: tahakndcaliskan@gmail.com
 
 ---
 
 # Çeyizim Privacy Policy (English)
 
-Çeyizim does not collect, transmit, or share any personal data. Everything you enter (name, wedding date, budget, item lists, prices, notes, photos) is stored only on your device. The app makes no network requests, has no accounts, and contains no analytics, advertising, or tracking SDKs. Photos you attach are downscaled and stored locally; the app only receives the images you explicitly pick. CSV export is initiated by you through the iOS share sheet. You can delete all data at any time from Settings, or by removing the app. Contact: ceyizim.app@gmail.com
+Çeyizim does not collect, transmit, or share any personal data. Everything you enter (name, wedding date, budget, item lists, prices, notes, photos) is stored only on your device. The app makes no network requests, has no accounts, and contains no analytics, advertising, or tracking SDKs. Photos you attach are downscaled and stored locally; the app only receives the images you explicitly pick. CSV export is initiated by you through the iOS share sheet. You can delete all data at any time from Settings, or by removing the app. Contact: tahakndcaliskan@gmail.com
