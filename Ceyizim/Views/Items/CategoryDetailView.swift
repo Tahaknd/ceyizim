@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import StoreKit
 
 struct CategoryDetailView: View {
     @Environment(\.modelContext) private var context
@@ -13,6 +14,7 @@ struct CategoryDetailView: View {
     @State private var itemToDelete: CeyizItem? = nil
     @State private var isDeleted = false
     @State private var hideCompleted = false
+    @Environment(\.requestReview) private var requestReview
 
     private var sortedItems: [CeyizItem] {
         category.items
@@ -56,7 +58,11 @@ struct CategoryDetailView: View {
                                 }
                                 .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                     if item.status == .planned {
-                                        Button { withAnimation { item.mark(.purchased) }; Haptics.success() } label: { Label("Alındı", systemImage: "checkmark") }
+                                        Button {
+                                            withAnimation { item.mark(.purchased) }
+                                            Haptics.success()
+                                            ReviewPrompt.requestAfterFirstPurchase { requestReview() }
+                                        } label: { Label("Alındı", systemImage: "checkmark") }
                                             .tint(Palette.success)
                                     } else {
                                         Button { withAnimation { item.mark(.planned) } } label: { Label("Alınacak", systemImage: "arrow.uturn.backward") }

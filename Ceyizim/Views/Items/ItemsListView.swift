@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import StoreKit
 
 enum ItemSort: String, CaseIterable, Identifiable {
     case category, name, newest, priceDesc, priority
@@ -27,6 +28,7 @@ struct ItemsListView: View {
     @State private var sort: ItemSort = .category
     @State private var showingAdd = false
     @State private var itemToDelete: CeyizItem? = nil
+    @Environment(\.requestReview) private var requestReview
 
     private var filtered: [CeyizItem] {
         var result = items
@@ -194,7 +196,11 @@ struct ItemsListView: View {
                         }
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             if item.status == .planned {
-                                Button { withAnimation { item.mark(.purchased) }; Haptics.success() } label: {
+                                Button {
+                                    withAnimation { item.mark(.purchased) }
+                                    Haptics.success()
+                                    ReviewPrompt.requestAfterFirstPurchase { requestReview() }
+                                } label: {
                                     Label("Alındı", systemImage: "checkmark")
                                 }.tint(Palette.success)
                             } else {

@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import StoreKit
 
 struct ItemDetailView: View {
     @Environment(\.modelContext) private var context
@@ -10,6 +11,7 @@ struct ItemDetailView: View {
     @State private var showingEdit = false
     @State private var showingDelete = false
     @State private var isDeleted = false
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         Group {
@@ -111,6 +113,7 @@ struct ItemDetailView: View {
             if item.status != .purchased {
                 actionButton(title: "Alındı", icon: "checkmark.circle.fill", color: Palette.success) {
                     item.mark(.purchased); Haptics.success()
+                    ReviewPrompt.requestAfterFirstPurchase { requestReview() }
                 }
             }
             if item.status != .gifted {

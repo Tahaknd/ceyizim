@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import StoreKit
 
 // MARK: - Progress ring
 
@@ -189,13 +190,17 @@ struct ItemRow: View {
     var showCategory = false
     var onToggle: (() -> Void)? = nil
 
+    @Environment(\.requestReview) private var requestReview
+
     var body: some View {
         HStack(spacing: 12) {
             Button {
                 Haptics.light()
+                let markingPurchased = item.status == .planned
                 withAnimation(.snappy) {
-                    item.mark(item.status == .planned ? .purchased : .planned)
+                    item.mark(markingPurchased ? .purchased : .planned)
                 }
+                if markingPurchased { ReviewPrompt.requestAfterFirstPurchase { requestReview() } }
                 onToggle?()
             } label: {
                 Image(systemName: item.status.icon)

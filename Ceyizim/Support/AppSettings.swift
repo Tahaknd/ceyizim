@@ -7,6 +7,7 @@ enum SettingsKeys {
     static let weddingDate = "weddingDateTimestamp"   // 0 = not set
     static let currency = "currencyCode"
     static let seededTemplate = "seededTemplate"
+    static let requestedReviewAfterFirstPurchase = "requestedReviewAfterFirstPurchase"
 }
 
 enum AppConfig {

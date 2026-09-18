@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import PhotosUI
+import StoreKit
 
 struct ItemFormView: View {
     enum Mode {
@@ -10,6 +11,7 @@ struct ItemFormView: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.requestReview) private var requestReview
     @Query(sort: \CeyizCategory.sortOrder) private var categories: [CeyizCategory]
     @AppStorage(SettingsKeys.currency) private var currency = "TRY"
 
@@ -238,6 +240,7 @@ struct ItemFormView: View {
         item.notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
         item.photoData = photoData
         Haptics.success()
+        if status == .purchased { ReviewPrompt.requestAfterFirstPurchase { requestReview() } }
         dismiss()
     }
 }

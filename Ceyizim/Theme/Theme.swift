@@ -143,3 +143,14 @@ enum Haptics {
     static func success() { UINotificationFeedbackGenerator().notificationOccurred(.success) }
     static func warning() { UINotificationFeedbackGenerator().notificationOccurred(.warning) }
 }
+
+/// Asks for a store review the first time a user marks an item as purchased —
+/// their earliest real "it worked" moment. Fires at most once ever; StoreKit
+/// decides on its own whether to actually show the native prompt.
+enum ReviewPrompt {
+    static func requestAfterFirstPurchase(_ requestReview: @escaping () -> Void) {
+        guard !UserDefaults.standard.bool(forKey: SettingsKeys.requestedReviewAfterFirstPurchase) else { return }
+        UserDefaults.standard.set(true, forKey: SettingsKeys.requestedReviewAfterFirstPurchase)
+        requestReview()
+    }
+}
