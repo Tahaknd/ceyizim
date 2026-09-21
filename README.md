@@ -86,6 +86,15 @@ Ayarların hepsi betiğin içinde:
 | Dantel madalyonlar | `MEDALLIONS` |
 | Cihaz arkasındaki ışık | `GLOW` |
 
+Betik iki boyut birden yazıyor, çünkü App Store Connect her ekran boyutu için ayrı kutu tutuyor ve tam eşleşmeyeni reddediyor:
+
+| Klasör | Boyut | ASC kutusu |
+|---|---|---|
+| `AppStore/screenshots/` | 1320×2868 | iPhone 6.9" |
+| `AppStore/screenshots/6.5-inch/` | 1284×2778 | iPhone 6.5" |
+
+Yeni bir boyut gerekirse `EXTRA_SIZES` sözlüğüne bir satır ekle, kareler o boyutta da üretilir. 6.9" yüklediğinde Apple daha küçük iPhone'lar için onu kullanır; 6.5" kutusu ancak uygulama listesinde ayrıca istendiğinde gerekiyor.
+
 `AppStore/screenshots/*.png` elle düzenlenmez. Kareler aynı panoramadan kesildiği için sırayı bozma — 01…06 numaraları galeri sırasıdır.
 
 `-ceyizimDemoData` olmadan yakalarsan mağaza sayfası 111 eşyanın 5'i alınmış, grafiği boş bir uygulama gösterir; dönüşümü asıl düşüren şey bu.
