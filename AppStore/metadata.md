@@ -80,7 +80,7 @@ How to test:
 Photo attachment uses PhotosPicker, which requires no photo library permission prompt.
 
 ## Ekran görüntüleri
-`AppStore/screenshots/` içindeki 5 PNG doğrudan yüklenir: iPhone 6.9" (1320×2868), başlıklı ve cihaz çerçeveli. App Store Connect 6.9" yüklendiğinde diğer iPhone boyutları için de kullanır.
+`AppStore/screenshots/` içindeki 5 PNG doğrudan yüklenir: iPhone 6.9" (1320×2868), başlıklı ve cihaz çerçeveli. Beşi tek bir panoramadan kesildiği için **sırayı bozma** — 01…05 numaraları galeri sırasıdır, zemin o sırada akıyor. App Store Connect 6.9" yüklendiğinde diğer iPhone boyutları için de kullanır.
 
 Bunlar üretilmiş dosyalar — elle düzenleme. Ham simülatör kayıtları `AppStore/screenshots/raw/` altında; başlıkları veya düzeni değiştirmek için `Tools/make-appstore-screenshots.py` içindeki `SHOTS` listesini düzenleyip betiği tekrar çalıştır (ayrıntı: README ▸ App Store görselleri).
 

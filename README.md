@@ -70,7 +70,9 @@ Sandık + altın kalp; ölçüler `MARK_SCALE` / `MARK_DY` ile tek yerden ayarla
 python3 Tools/make-appstore-screenshots.py            # hepsi
 python3 Tools/make-appstore-screenshots.py 02-listem.png   # tek dosya
 ```
-Araç markalı zemini, Türkçe başlığı, cihaz gövdesini ve temiz durum çubuğunu (9:41, dolu sinyal) ekler. Başlık metinleri betiğin içindeki `SHOTS` listesinde — metni orada değiştir, `AppStore/screenshots/*.png` elle düzenlenmez.
+Beş kare tek bir 6600×2868 panoramadan kesiliyor: zemin, ışık ve şeritler galeri boyunca kesintisiz akıyor, yani mağazada kaydırınca beş ayrı kart değil tek bir kompozisyon gibi duruyor. Cihazlar sırayla ±2,5° eğiliyor ve bir aşağı bir yukarı kayıyor; başlıklar ise sabit hizada kalıyor ki kaydırırken zıplamasın. Her karede ayrıca Türkçe başlık + alt başlık, altın ince çizgi, cihaz gövdesi ve normalize edilmiş durum çubuğu (9:41, dolu sinyal) var.
+
+Başlıklar, eğim açısı ve dikey kayma betiğin içindeki `SHOTS` listesinde; zemin renkleri `GROUND_STOPS`, akan şeritler `RIBBONS`. `AppStore/screenshots/*.png` elle düzenlenmez.
 
 `-ceyizimDemoData` olmadan yakalarsan mağaza sayfası 111 eşyanın 5'i alınmış, grafiği boş bir uygulama gösterir; dönüşümü asıl düşüren şey bu.
 
