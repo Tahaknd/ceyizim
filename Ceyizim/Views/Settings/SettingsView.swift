@@ -71,6 +71,25 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    NavigationLink {
+                        ThemePickerView()
+                    } label: {
+                        HStack {
+                            Label("Tema rengi", systemImage: "paintpalette.fill")
+                            Spacer()
+                            Circle()
+                                .fill(Palette.rose)
+                                .frame(width: 22, height: 22)
+                                .overlay { Circle().strokeBorder(Palette.textPrimary.opacity(0.10), lineWidth: 1) }
+                        }
+                    }
+                } header: {
+                    Text("Görünüm")
+                } footer: {
+                    Text("Uygulamanın vurgu rengini dilediğin renkle değiştir. Karanlık mod tonu kendiliğinden ayarlanır.")
+                }
+
+                Section {
                     Picker("Para birimi", selection: $currency) {
                         ForEach(CurrencyOption.all) { Text($0.title).tag($0.code) }
                     }

@@ -8,6 +8,9 @@ enum SettingsKeys {
     static let currency = "currencyCode"
     static let seededTemplate = "seededTemplate"
     static let requestedReviewAfterFirstPurchase = "requestedReviewAfterFirstPurchase"
+    static let accentHue = "accentHue"
+    static let accentSaturation = "accentSaturation"
+    static let accentLuminance = "accentLuminance"
 }
 
 enum AppConfig {

@@ -12,6 +12,7 @@ Ceyizim/
   Models/                     CeyizCategory, CeyizItem (@Model), CeyizStats (hesaplar)
   Support/                    AppSettings (anahtarlar, para/tarih formatı), SeedData (hazır liste), CSVExport, DemoData (yalnız DEBUG, ekran görüntüsü verisi)
   Theme/Theme.swift           Palette (aydınlık/karanlık), CategoryColor, Typo (Nunito), kart modifier
+  Theme/AccentTheme.swift     Kullanıcının seçtiği vurgu rengi ve ondan türeyen tonlar
   Fonts/                      Nunito (OFL lisanslı) — Info.plist UIAppFonts ile kayıtlı
   Views/
     Onboarding/               3 adımlı karşılama (isim, düğün tarihi, şablon)
@@ -88,6 +89,16 @@ Ayarların hepsi betiğin içinde:
 `AppStore/screenshots/*.png` elle düzenlenmez. Kareler aynı panoramadan kesildiği için sırayı bozma — 01…06 numaraları galeri sırasıdır.
 
 `-ceyizimDemoData` olmadan yakalarsan mağaza sayfası 111 eşyanın 5'i alınmış, grafiği boş bir uygulama gösterir; dönüşümü asıl düşüren şey bu.
+
+## Tema rengi
+
+Kullanıcı Ayarlar ▸ Görünüm'den vurgu rengini serbestçe seçiyor (iOS renk çarkı + 9 hazır ton). Seçim `Ceyizim/Theme/AccentTheme.swift` içinde tek bir `AccentTheme` değerine indirgeniyor: **ton (hue) ve doygunluk kullanıcının, parlaklık uygulamanın.**
+
+Sebep şu: serbest renk seçiminin tek gerçek arızası buton üstündeki beyaz yazı. Açık sarı seçilse beyaz yazı okunmaz olurdu. `AccentTheme` bu yüzden parlaklığı kullanıcıdan almıyor; seçilen ton ve doygunlukta, hedef WCAG bağıl parlaklığına oturan parlaklığı ikili aramayla çözüyor. Hedef aralık `luminanceRange = 0.17...0.26`, yani beyaz kontrastı her zaman **3,4:1 – 4,8:1** arasında. (Tema özelliğinden önceki gül 3,5:1'di — yani hiçbir seçim mevcut duruma göre kötüleşemiyor.) Doygunluk da `0.30...0.82` bandına sıkıştırılıyor ki ne ölü gri ne de neon çıksın.
+
+Vurgudan türeyen altı ton (`accentLight/Dark`, `deepLight/Dark`, `softLight/Dark`) ve kart tonu (`cardTintLight/Dark`), orijinal paletteki ölçülmüş oranlarla üretiliyor. Varsayılan tema (`AccentTheme.brand`) tam olarak eski gülü veriyor: `#D4667F / #B84D67 / #FBE4EA` ve karanlık karşılıkları.
+
+Uygulama tarafında `Palette.rose`, `roseDeep`, `roseSoft` ve `cardSecondary` artık sabit değil, `ThemeStore.shared.accent`'ten hesaplanan property'ler. `ThemeStore` `@Observable` olduğu için vurgu rengi kullanan her ekran tema değişince kendiliğinden yeniden çiziliyor — yeniden başlatma yok. Metin, arka plan ve durum renkleri (`textPrimary`, `background`, `success`, `warning`, `danger`, `gold`) temadan bağımsız sabit; nötr oldukları için her tonla çalışıyorlar.
 
 ## Bilinen sınırlar / 1.1 fikirleri
 - iCloud senkronizasyonu yok (CloudKit + entitlements gerekir).

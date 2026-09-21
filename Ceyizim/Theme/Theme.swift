@@ -12,10 +12,7 @@ enum Palette {
 
     static let background     = dynamic(0xFDF7F4, 0x171014)
     static let card           = dynamic(0xFFFFFF, 0x241922)
-    static let cardSecondary  = dynamic(0xFBEFF2, 0x30222A)
-    static let rose           = dynamic(0xD4667F, 0xE58AA0)
-    static let roseDeep       = dynamic(0xB84D67, 0xD1728A)
-    static let roseSoft       = dynamic(0xFBE4EA, 0x46293A)
+    static var cardSecondary: Color { themed(\.cardTintLight, \.cardTintDark) }
     static let textPrimary    = dynamic(0x33222B, 0xF7EEF1)
     static let textSecondary  = dynamic(0x8C7580, 0xB79FA9)
     static let separator      = dynamic(0xF0E2E6, 0x3A2B32)
@@ -23,6 +20,23 @@ enum Palette {
     static let warning        = dynamic(0xE0A24B, 0xF0B865)
     static let danger         = dynamic(0xD95F5F, 0xE87C7C)
     static let gold           = dynamic(0xD9A960, 0xE8C27E)
+
+    // Everything tinted by the accent follows the theme the user picked.
+    // Reading `ThemeStore.shared.accent` inside a view body registers
+    // observation, so every view drawing an accent redraws itself when the
+    // theme changes. With the default theme these resolve to the original rose
+    // (0xD4667F / 0xB84D67 / 0xFBE4EA / 0xFBEFF2 and their dark counterparts).
+    static var rose: Color     { themed(\.accentLight, \.accentDark) }
+    static var roseDeep: Color { themed(\.deepLight, \.deepDark) }
+    static var roseSoft: Color { themed(\.softLight, \.softDark) }
+
+    private static func themed(_ light: KeyPath<AccentTheme, Color>,
+                               _ dark: KeyPath<AccentTheme, Color>) -> Color {
+        let theme = ThemeStore.shared.accent
+        return Color(uiColor: UIColor { tc in
+            UIColor(theme[keyPath: tc.userInterfaceStyle == .dark ? dark : light])
+        })
+    }
 }
 
 extension UIColor {
