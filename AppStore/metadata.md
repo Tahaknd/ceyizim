@@ -80,11 +80,22 @@ How to test:
 Photo attachment uses PhotosPicker, which requires no photo library permission prompt.
 
 ## Ekran görüntüleri
-`AppStore/screenshots/` klasöründe (01-ozet, 02-listem, 03-kategori-detay, 04-harcamalar, 05-esya-detay) iPhone 17 Pro Max (6.9", 1320×2868) görüntüleri var. App Store Connect 6.9" yüklendiğinde diğer iPhone boyutları için de kullanır. İsteğe bağlı: iPhone 16 Plus/6.5" için ayrıca alınabilir.
+`AppStore/screenshots/` içindeki 6 PNG doğrudan yüklenir: iPhone 6.9" (1320×2868), başlıklı ve cihaz çerçeveli. Altısı tek bir panoramadan kesildiği için **sırayı bozma** — 01…06 numaraları galeri sırasıdır, zemin o sırada akıyor. App Store Connect 6.9" yüklendiğinde diğer iPhone boyutları için de kullanır.
 
-Önerilen sıra ve başlıklar (Figma/Keynote'ta çerçeve eklenirse):
-1. Özet — "Çeyizin tek bakışta"
-2. Listem — "Hazır liste, tek dokunuşla işaretle"
-3. Kategori — "Kategori kategori ilerle"
-4. Harcamalar — "Harcamaların otomatik toplanır"
-5. Eşya detayı — "Fotoğraf, mağaza, not, hediye"
+Bunlar üretilmiş dosyalar — elle düzenleme. Ham simülatör kayıtları `AppStore/screenshots/raw/` altında; başlıkları veya düzeni değiştirmek için `Tools/make-appstore-screenshots.py` içindeki `SHOTS` listesini düzenleyip betiği tekrar çalıştır (ayrıntı: README ▸ App Store görselleri).
+
+| # | Ekran | Başlık | Alt başlık |
+|---|---|---|---|
+| 1 | Özet | Çeyizin **tek bakışta** | İlerleme, harcama ve düğüne kalan gün |
+| 2 | Listem | **Hazır listeyle** hemen başla | 10 kategori, 111 eşya — tek dokunuşla işaretle |
+| 3 | Kategori | **Kategori kategori** ilerle | Mutfaktan yatak odasına, eksik kalan hiçbir şey yok |
+| 4 | Harcamalar | Hesabı **uygulama tutsun** | Toplam, kategori grafiği ve en büyük harcamalar |
+| 5 | Eşya detayı | Her eşyanın **kendi kartı** | Fotoğraf, mağaza, fiyat, hediye eden ve not |
+| 6 | Kapanış | Her şey **telefonunda** kalır | Hesap yok, sunucu yok, reklam yok |
+
+Kalın yazılan kelimeler görselde altın renkte. 6. kare ham kayıt istemez: ikon, uygulama adı, üç vaat rozeti ve alttan yükselen bir telefonla kapanış kartı olarak üretilir.
+
+Yeniden yakalarken şemaya `-ceyizimDemoData` argümanını ekle; aksi halde ekranlar neredeyse boş bir liste ve boş bir grafik gösterir.
+
+## Uygulama ikonu
+`Ceyizim/Assets.xcassets/AppIcon.appiconset` içindeki üç PNG (aydınlık / karanlık / tinted) `python3 Tools/make-icon.py` ile üretilir. 1024×1024 pazarlama ikonu olarak aydınlık sürüm kullanılır; Xcode arşivle birlikte otomatik yükler.
