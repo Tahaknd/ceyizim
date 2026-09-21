@@ -70,9 +70,22 @@ Sandık + altın kalp; ölçüler `MARK_SCALE` / `MARK_DY` ile tek yerden ayarla
 python3 Tools/make-appstore-screenshots.py            # hepsi
 python3 Tools/make-appstore-screenshots.py 02-listem.png   # tek dosya
 ```
-Beş kare tek bir 6600×2868 panoramadan kesiliyor: zemin, ışık ve şeritler galeri boyunca kesintisiz akıyor, yani mağazada kaydırınca beş ayrı kart değil tek bir kompozisyon gibi duruyor. Cihazlar sırayla ±2,5° eğiliyor ve bir aşağı bir yukarı kayıyor; başlıklar ise sabit hizada kalıyor ki kaydırırken zıplamasın. Her karede ayrıca Türkçe başlık + alt başlık, altın ince çizgi, cihaz gövdesi ve normalize edilmiş durum çubuğu (9:41, dolu sinyal) var.
+Altı kare tek bir 7920×2868 panoramadan kesiliyor: zemin, ışık, akan şeritler ve dantel madalyonlar galeri boyunca kesintisiz devam ediyor, yani mağazada kaydırınca altı ayrı kart değil tek bir kompozisyon gibi duruyor. Cihazlar sırayla ±2,5° eğilip bir aşağı bir yukarı kayıyor; başlıklar sabit hizada kalıyor ki kaydırırken zıplamasın.
 
-Başlıklar, eğim açısı ve dikey kayma betiğin içindeki `SHOTS` listesinde; zemin renkleri `GROUND_STOPS`, akan şeritler `RIBBONS`. `AppStore/screenshots/*.png` elle düzenlenmez.
+Her karede: başlıkta altın vurgulu anahtar kelime, alt başlık, ortak altın ince çizgi, yan tuşları ve parlak iç kenarı olan cihaz gövdesi, normalize edilmiş durum çubuğu (9:41, dolu sinyal). Son kare (`06-gizlilik.png`) ham kayıt istemiyor — ikon, uygulama adı, gizlilik vaadi ve alttan yükselen bir telefonla galeriyi kapatıyor.
+
+Ayarların hepsi betiğin içinde:
+
+| Ne | Nerede |
+|---|---|
+| Başlık, alt başlık, eğim, dikey kayma | `SHOTS` |
+| Başlıkta altın vurgu | Metni `*yıldız*` arasına al |
+| Zemin renk geçişi | `GROUND_STOPS` |
+| Akan şeritler | `RIBBONS` |
+| Dantel madalyonlar | `MEDALLIONS` |
+| Cihaz arkasındaki ışık | `GLOW` |
+
+`AppStore/screenshots/*.png` elle düzenlenmez. Kareler aynı panoramadan kesildiği için sırayı bozma — 01…06 numaraları galeri sırasıdır.
 
 `-ceyizimDemoData` olmadan yakalarsan mağaza sayfası 111 eşyanın 5'i alınmış, grafiği boş bir uygulama gösterir; dönüşümü asıl düşüren şey bu.
 
