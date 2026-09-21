@@ -17,6 +17,11 @@ struct CeyizimApp: App {
             container = try! ModelContainer(for: schema,
                                              configurations: [ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)])
         }
+        #if DEBUG
+        if DemoData.isRequested {
+            DemoData.apply(to: ModelContext(container))
+        }
+        #endif
     }
 
     var body: some Scene {

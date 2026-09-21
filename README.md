@@ -10,7 +10,7 @@ Ceyizim/
   Info.plist                  ITSAppUsesNonExemptEncryption=NO, tr bölgesi
   PrivacyInfo.xcprivacy       Gizlilik manifestosu (UserDefaults CA92.1)
   Models/                     CeyizCategory, CeyizItem (@Model), CeyizStats (hesaplar)
-  Support/                    AppSettings (anahtarlar, para/tarih formatı), SeedData (hazır liste), CSVExport
+  Support/                    AppSettings (anahtarlar, para/tarih formatı), SeedData (hazır liste), CSVExport, DemoData (yalnız DEBUG, ekran görüntüsü verisi)
   Theme/Theme.swift           Palette (aydınlık/karanlık), CategoryColor, Typo (Nunito), kart modifier
   Fonts/                      Nunito (OFL lisanslı) — Info.plist UIAppFonts ile kayıtlı
   Views/
@@ -20,8 +20,11 @@ Ceyizim/
     Budget/                   Harcamalar: toplam harcanan, tahmini toplam, Swift Charts grafiği, en büyük harcamalar, hediyeler
     Settings/                 Profil, para birimi, hazır liste, CSV dışa aktar, verileri sil, hakkında
     Components/               ProgressRing, ProgressBar, ItemRow, EmptyStateView, StatPill, ...
-Tools/make-icon.swift         App icon üretici (swift Tools/make-icon.swift <çıktı klasörü>)
+Tools/make-icon.py            App icon üretici (üç görünüm: aydınlık/karanlık/tinted)
+Tools/make-appstore-screenshots.py  Ham simülatör kayıtlarını mağaza görsellerine çevirir
 AppStore/                     Metaveri, gizlilik politikası, ekran görüntüleri
+  screenshots/raw/            Ham simülatör kayıtları (girdi)
+  screenshots/*.png           Yüklenecek son görseller (üretilir, elle düzenlenmez)
 ```
 
 ## İş mantığı
@@ -43,9 +46,33 @@ xcodebuild -project Ceyizim.xcodeproj -scheme Ceyizim -destination 'platform=iOS
 2. **URL'ler:** `Ceyizim/Support/AppSettings.swift` içindeki `privacyPolicyURL` ve `supportURL` gerçek adreslerle değiştir. `AppStore/privacy-policy.md` içeriğini o adreste yayınla (zorunlu).
 3. **App Store Connect:** Yeni uygulama → ad "Çeyizim", birincil dil Türkçe, SKU serbest. `AppStore/metadata.md` içeriğini kopyala.
 4. **Gizlilik etiketi:** "Veri toplanmıyor". Yaş: 4+.
-5. **Ekran görüntüleri:** `AppStore/screenshots/*.png` (6.9"). Yükle.
+5. **Ekran görüntüleri:** `AppStore/screenshots/*.png` (6.9"). Aşağıdaki akışla üret, sonra yükle.
 6. **Archive:** Xcode > Product > Archive (Any iOS Device) → Distribute → App Store Connect → Upload. Export compliance sorusu Info.plist sayesinde çıkmaz.
 7. **Build'i sürüme bağla**, inceleme notlarını yapıştır, "Submit for Review".
+
+## App Store görselleri
+
+İkisi de Pillow ile çalışır, macOS/Linux fark etmez: `python3 -m pip install pillow`.
+
+**Uygulama ikonu**
+```bash
+python3 Tools/make-icon.py        # Assets.xcassets/AppIcon.appiconset içine üç PNG yazar
+```
+Sandık + altın kalp; ölçüler `MARK_SCALE` / `MARK_DY` ile tek yerden ayarlanıyor. Renkler `Theme.swift` paletiyle aynı (gül `#BD5069→#A13E58`, fildişi `#F8F1E9`, altın `#D7A65C`).
+
+**Mağaza ekran görüntüleri**
+```bash
+# 1) Simülatörü dolu veriyle aç: Xcode ▸ Edit Scheme ▸ Run ▸ Arguments ▸ "-ceyizimDemoData"
+#    (DemoData yalnız DEBUG'ta derlenir; mağaza binary'sine girmez)
+# 2) iPhone 17 Pro Max (6.9") simülatöründe ⌘S ile 5 ekranı yakala, 1320×2868 PNG olarak
+#    AppStore/screenshots/raw/ içine aynı isimlerle koy
+# 3) Çerçeve + başlık bas:
+python3 Tools/make-appstore-screenshots.py            # hepsi
+python3 Tools/make-appstore-screenshots.py 02-listem.png   # tek dosya
+```
+Araç markalı zemini, Türkçe başlığı, cihaz gövdesini ve temiz durum çubuğunu (9:41, dolu sinyal) ekler. Başlık metinleri betiğin içindeki `SHOTS` listesinde — metni orada değiştir, `AppStore/screenshots/*.png` elle düzenlenmez.
+
+`-ceyizimDemoData` olmadan yakalarsan mağaza sayfası 111 eşyanın 5'i alınmış, grafiği boş bir uygulama gösterir; dönüşümü asıl düşüren şey bu.
 
 ## Bilinen sınırlar / 1.1 fikirleri
 - iCloud senkronizasyonu yok (CloudKit + entitlements gerekir).
