@@ -250,8 +250,9 @@ struct OnboardingView: View {
         userName = name.trimmingCharacters(in: .whitespaces)
         weddingTimestamp = hasWeddingDate ? weddingDate.timeIntervalSince1970 : 0
         if useTemplate {
-            SeedData.apply(to: context)
+            let added = SeedData.apply(to: context)
             seededTemplate = true
+            Analytics.track("template_applied", ["added_count": added, "source": "onboarding"])
         }
         Haptics.success()
         Analytics.track("onboarding_completed", [

@@ -201,7 +201,7 @@ struct ItemRow: View {
                     item.mark(markingPurchased ? .purchased : .planned)
                 }
                 if markingPurchased { ReviewPrompt.requestAfterFirstPurchase { requestReview() } }
-                Analytics.track(markingPurchased ? "item_marked_purchased" : "item_marked_planned")
+                Analytics.track(markingPurchased ? "item_marked_purchased" : "item_marked_planned", ["source": "row_tap"])
                 onToggle?()
             } label: {
                 Image(systemName: item.status.icon)

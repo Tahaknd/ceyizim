@@ -291,9 +291,10 @@ struct HomeView: View {
                            message: "Hazır listeyle saniyeler içinde başlayabilir veya kendi kategorilerini oluşturabilirsin.")
             VStack(spacing: 10) {
                 Button {
-                    SeedData.apply(to: context)
+                    let added = SeedData.apply(to: context)
                     seededTemplate = true
                     Haptics.success()
+                    Analytics.track("template_applied", ["added_count": added, "source": "home_empty_state"])
                 } label: { Label("Hazır listeyle başla", systemImage: "wand.and.stars") }
                     .buttonStyle(PrimaryButtonStyle())
                 Button { showingAddCategory = true } label: {

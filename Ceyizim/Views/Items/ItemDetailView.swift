@@ -115,19 +115,19 @@ struct ItemDetailView: View {
                 actionButton(title: "Alındı", icon: "checkmark.circle.fill", color: Palette.success) {
                     item.mark(.purchased); Haptics.success()
                     ReviewPrompt.requestAfterFirstPurchase { requestReview() }
-                    Analytics.track("item_marked_purchased")
+                    Analytics.track("item_marked_purchased", ["source": "detail_button"])
                 }
             }
             if item.status != .gifted {
                 actionButton(title: "Hediye geldi", icon: "gift.fill", color: Palette.gold) {
                     item.mark(.gifted); Haptics.success()
-                    Analytics.track("item_marked_gifted")
+                    Analytics.track("item_marked_gifted", ["source": "detail_button"])
                 }
             }
             if item.status != .planned {
                 actionButton(title: "Alınacak'a al", icon: "arrow.uturn.backward.circle.fill", color: Palette.textSecondary) {
                     item.mark(.planned); Haptics.light()
-                    Analytics.track("item_marked_planned")
+                    Analytics.track("item_marked_planned", ["source": "detail_button"])
                 }
             }
         }
@@ -185,7 +185,7 @@ struct ItemDetailView: View {
     private func deleteItem() {
         isDeleted = true
         dismiss()
-        Analytics.track("item_deleted")
+        Analytics.track("item_deleted", ["source": "detail_menu"])
         let target = item
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             context.delete(target)

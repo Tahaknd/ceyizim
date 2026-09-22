@@ -165,6 +165,9 @@ enum ReviewPrompt {
     static func requestAfterFirstPurchase(_ requestReview: @escaping () -> Void) {
         guard !UserDefaults.standard.bool(forKey: SettingsKeys.requestedReviewAfterFirstPurchase) else { return }
         UserDefaults.standard.set(true, forKey: SettingsKeys.requestedReviewAfterFirstPurchase)
+        // Weak signal only: StoreKit decides silently whether to actually show
+        // anything and never reports back, so this means "we asked," not "seen."
+        Analytics.track("review_prompt_requested")
         requestReview()
     }
 }

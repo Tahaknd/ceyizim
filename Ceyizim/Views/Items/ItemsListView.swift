@@ -133,7 +133,7 @@ struct ItemsListView: View {
                                 titleVisibility: .visible) {
                 Button("Sil", role: .destructive) {
                     if let item = itemToDelete { context.delete(item) }
-                    Analytics.track("item_deleted")
+                    Analytics.track("item_deleted", ["source": "list_swipe"])
                     itemToDelete = nil
                 }
                 Button("Vazgeç", role: .cancel) { itemToDelete = nil }
@@ -192,7 +192,7 @@ struct ItemsListView: View {
                             if item.status != .gifted {
                                 Button {
                                     withAnimation { item.mark(.gifted) }
-                                    Analytics.track("item_marked_gifted")
+                                    Analytics.track("item_marked_gifted", ["source": "list_swipe"])
                                 } label: {
                                     Label("Hediye", systemImage: "gift.fill")
                                 }.tint(Palette.gold)
@@ -204,14 +204,14 @@ struct ItemsListView: View {
                                     withAnimation { item.mark(.purchased) }
                                     Haptics.success()
                                     ReviewPrompt.requestAfterFirstPurchase { requestReview() }
-                                    Analytics.track("item_marked_purchased")
+                                    Analytics.track("item_marked_purchased", ["source": "list_swipe"])
                                 } label: {
                                     Label("Alındı", systemImage: "checkmark")
                                 }.tint(Palette.success)
                             } else {
                                 Button {
                                     withAnimation { item.mark(.planned) }
-                                    Analytics.track("item_marked_planned")
+                                    Analytics.track("item_marked_planned", ["source": "list_swipe"])
                                 } label: {
                                     Label("Alınacak", systemImage: "arrow.uturn.backward")
                                 }.tint(Palette.textSecondary)

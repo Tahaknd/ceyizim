@@ -4,6 +4,7 @@ import SwiftData
 @main
 struct CeyizimApp: App {
     let container: ModelContainer
+    @Environment(\.scenePhase) private var scenePhase
 
     init() {
         Typo.configureAppearance()
@@ -31,6 +32,14 @@ struct CeyizimApp: App {
                 .font(Typo.body)
         }
         .modelContainer(container)
+        .onChange(of: scenePhase) { _, newPhase in
+            switch newPhase {
+            case .active: Analytics.sessionStarted()
+            case .background: Analytics.sessionEnded()
+            case .inactive: break
+            @unknown default: break
+            }
+        }
     }
 }
 
@@ -48,7 +57,10 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut(duration: 0.35), value: hasOnboarded)
-        .onAppear { Analytics.track("app_opened") }
+        .onAppear {
+            Analytics.trackAppOpened()
+            Analytics.sessionStarted()
+        }
     }
 }
 

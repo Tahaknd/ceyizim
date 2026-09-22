@@ -142,7 +142,7 @@ struct SettingsView: View {
                     seededTemplate = true
                     templateResult = added
                     Haptics.success()
-                    Analytics.track("template_applied", ["added_count": added])
+                    Analytics.track("template_applied", ["added_count": added, "source": "settings"])
                 }
                 Button("Vazgeç", role: .cancel) {}
             } message: {
