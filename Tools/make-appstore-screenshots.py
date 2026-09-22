@@ -29,8 +29,15 @@ OUT_DIR = os.path.join(ROOT, "AppStore", "screenshots")
 FONT_DIR = os.path.join(ROOT, "Ceyizim", "Fonts")
 ICON = os.path.join(ROOT, "Ceyizim", "Assets.xcassets", "AppIcon.appiconset", "AppIcon.png")
 
-# 6.9" App Store size. Captures are expected at exactly this size.
+# The gallery is composed at the 6.9" size, which is what the captures are.
 W, H = 1320, 2868
+
+# App Store Connect keeps a separate slot per display size and refuses anything
+# that is not an exact match. Each entry is an extra copy of the finished frame,
+# resized, written to its own folder.
+EXTRA_SIZES = {
+    "6.5-inch": (1284, 2778),   # iPhone 11 Pro Max / XS Max slot
+}
 
 # Brand — same values as Theme.swift and the app icon.
 HEADLINE = (0xFF, 0xF6, 0xEF)
@@ -511,9 +518,17 @@ def build(index, shot, pano):
         place_device(canvas, normalise_status_bar(capture), shot["tilt"], shot["dy"])
         stamp(canvas, text_block(shot["headline"], shot["subline"]))
 
+    frame = canvas.convert("RGB")
     out = os.path.join(OUT_DIR, shot["file"])
-    canvas.convert("RGB").save(out)
-    print("wrote", out)
+    frame.save(out)
+    print("wrote", out, f'({W}×{H})')
+
+    for folder, size in EXTRA_SIZES.items():
+        directory = os.path.join(OUT_DIR, folder)
+        os.makedirs(directory, exist_ok=True)
+        path = os.path.join(directory, shot["file"])
+        frame.resize(size, Image.LANCZOS).save(path)
+        print("wrote", path, f"({size[0]}×{size[1]})")
 
 
 def main():
