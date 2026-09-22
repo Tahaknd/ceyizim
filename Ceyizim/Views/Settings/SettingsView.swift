@@ -93,6 +93,9 @@ struct SettingsView: View {
                     Picker("Para birimi", selection: $currency) {
                         ForEach(CurrencyOption.all) { Text($0.title).tag($0.code) }
                     }
+                    .onChange(of: currency) { _, newValue in
+                        Analytics.track("currency_changed", ["currency": newValue])
+                    }
                 } header: {
                     Text("Harcamalar")
                 } footer: {
@@ -115,7 +118,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Veriler")
                 } footer: {
-                    Text("Verilerin yalnızca bu cihazda saklanır; hiçbir sunucuya gönderilmez. \(items.count) eşya, \(categories.count) kategori.")
+                    Text("Çeyiz listen (eşyalar, fotoğraflar, notlar) yalnızca bu cihazda saklanır, hiçbir sunucuya gönderilmez. Uygulamayı nasıl kullandığına dair kimliksiz istatistikler (örn. hangi ekranın açıldığı) paylaşılır. \(items.count) eşya, \(categories.count) kategori.")
                 }
 
                 Section("Hakkında") {
@@ -139,6 +142,7 @@ struct SettingsView: View {
                     seededTemplate = true
                     templateResult = added
                     Haptics.success()
+                    Analytics.track("template_applied", ["added_count": added])
                 }
                 Button("Vazgeç", role: .cancel) {}
             } message: {
@@ -161,6 +165,7 @@ struct SettingsView: View {
     }
 
     private func deleteAll() {
+        Analytics.track("all_data_deleted", ["item_count": items.count, "category_count": categories.count])
         for item in items { context.delete(item) }
         for category in categories { context.delete(category) }
         try? context.save()

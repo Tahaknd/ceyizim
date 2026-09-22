@@ -52,7 +52,10 @@ struct CategoryDetailView: View {
                                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                     Button(role: .destructive) { itemToDelete = item } label: { Label("Sil", systemImage: "trash") }
                                     if item.status != .gifted {
-                                        Button { withAnimation { item.mark(.gifted) } } label: { Label("Hediye", systemImage: "gift.fill") }
+                                        Button {
+                                            withAnimation { item.mark(.gifted) }
+                                            Analytics.track("item_marked_gifted")
+                                        } label: { Label("Hediye", systemImage: "gift.fill") }
                                             .tint(Palette.gold)
                                     }
                                 }
@@ -62,10 +65,14 @@ struct CategoryDetailView: View {
                                             withAnimation { item.mark(.purchased) }
                                             Haptics.success()
                                             ReviewPrompt.requestAfterFirstPurchase { requestReview() }
+                                            Analytics.track("item_marked_purchased")
                                         } label: { Label("Alındı", systemImage: "checkmark") }
                                             .tint(Palette.success)
                                     } else {
-                                        Button { withAnimation { item.mark(.planned) } } label: { Label("Alınacak", systemImage: "arrow.uturn.backward") }
+                                        Button {
+                                            withAnimation { item.mark(.planned) }
+                                            Analytics.track("item_marked_planned")
+                                        } label: { Label("Alınacak", systemImage: "arrow.uturn.backward") }
                                             .tint(Palette.textSecondary)
                                     }
                                 }
@@ -91,6 +98,7 @@ struct CategoryDetailView: View {
         .background(Palette.background)
         .navigationTitle(category.name)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear { Analytics.screen("category_detail") }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
@@ -118,6 +126,7 @@ struct CategoryDetailView: View {
                             titleVisibility: .visible) {
             Button("Sil", role: .destructive) {
                 if let item = itemToDelete { context.delete(item) }
+                Analytics.track("item_deleted")
                 itemToDelete = nil
             }
             Button("Vazgeç", role: .cancel) { itemToDelete = nil }
@@ -160,6 +169,7 @@ struct CategoryDetailView: View {
     private func deleteCategory() {
         isDeleted = true
         dismiss()
+        Analytics.track("category_deleted")
         let target = category
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             context.delete(target)

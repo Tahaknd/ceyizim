@@ -24,6 +24,7 @@ struct ItemDetailView: View {
         .background(Palette.background)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear { Analytics.screen("item_detail") }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
@@ -114,16 +115,19 @@ struct ItemDetailView: View {
                 actionButton(title: "Alındı", icon: "checkmark.circle.fill", color: Palette.success) {
                     item.mark(.purchased); Haptics.success()
                     ReviewPrompt.requestAfterFirstPurchase { requestReview() }
+                    Analytics.track("item_marked_purchased")
                 }
             }
             if item.status != .gifted {
                 actionButton(title: "Hediye geldi", icon: "gift.fill", color: Palette.gold) {
                     item.mark(.gifted); Haptics.success()
+                    Analytics.track("item_marked_gifted")
                 }
             }
             if item.status != .planned {
                 actionButton(title: "Alınacak'a al", icon: "arrow.uturn.backward.circle.fill", color: Palette.textSecondary) {
                     item.mark(.planned); Haptics.light()
+                    Analytics.track("item_marked_planned")
                 }
             }
         }
@@ -181,6 +185,7 @@ struct ItemDetailView: View {
     private func deleteItem() {
         isDeleted = true
         dismiss()
+        Analytics.track("item_deleted")
         let target = item
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             context.delete(target)

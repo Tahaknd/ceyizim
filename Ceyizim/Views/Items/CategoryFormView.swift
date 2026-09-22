@@ -123,6 +123,7 @@ struct CategoryFormView: View {
             context.insert(new)
             try? context.save()
             onCreate?(new)
+            Analytics.track("category_added")
         }
         Haptics.success()
         dismiss()

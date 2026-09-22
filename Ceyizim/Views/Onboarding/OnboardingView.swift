@@ -254,6 +254,10 @@ struct OnboardingView: View {
             seededTemplate = true
         }
         Haptics.success()
+        Analytics.track("onboarding_completed", [
+            "used_template": useTemplate,
+            "set_wedding_date": hasWeddingDate,
+        ])
         hasOnboarded = true
     }
 }

@@ -223,9 +223,11 @@ struct ItemFormView: View {
         case .create:
             item = CeyizItem(name: trimmedName)
             context.insert(item)
+            Analytics.track("item_added", ["has_photo": photoData != nil])
         case .edit(let existing):
             item = existing
             item.name = trimmedName
+            Analytics.track("item_edited")
         }
         item.category = category
         item.quantity = quantity

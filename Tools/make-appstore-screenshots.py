@@ -80,8 +80,8 @@ SHOTS = [
      "tilt": -2.5, "dy": 0},
     {"file": "06-gizlilik.png",
      "closing": True,
-     "headline": "Her şey *telefonunda* kalır",
-     "subline": "Hesap yok, sunucu yok, reklam yok",
+     "headline": "Çeyiz listen *sende* kalır",
+     "subline": "Eşyaların, fotoğrafların cihazında kalır. Hesap yok, reklam yok.",
      "chips": ["Çevrimdışı çalışır", "CSV dışa aktarım", "Ücretsiz"],
      "capture": "01-ozet.png", "tilt": 2.5, "dy": 994},
 ]

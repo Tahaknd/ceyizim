@@ -48,10 +48,22 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut(duration: 0.35), value: hasOnboarded)
+        .onAppear { Analytics.track("app_opened") }
     }
 }
 
-enum AppTab: Hashable { case home, list, budget, settings }
+enum AppTab: Hashable {
+    case home, list, budget, settings
+
+    var analyticsName: String {
+        switch self {
+        case .home: return "home"
+        case .list: return "items_list"
+        case .budget: return "budget"
+        case .settings: return "settings"
+        }
+    }
+}
 
 struct MainTabView: View {
     @State private var selection: AppTab = .home
@@ -71,5 +83,7 @@ struct MainTabView: View {
                 .tabItem { Label("Ayarlar", systemImage: "gearshape.fill") }
                 .tag(AppTab.settings)
         }
+        .onAppear { Analytics.screen(selection.analyticsName) }
+        .onChange(of: selection) { _, newValue in Analytics.screen(newValue.analyticsName) }
     }
 }

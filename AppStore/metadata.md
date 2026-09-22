@@ -54,9 +54,11 @@ Mutlu yuvana giden yolda yanındayız. 🌸
 Tüm sorulara "Hayır" → **4+**. Sınırsız web erişimi yok, kumar yok, kullanıcı üretimi içerik paylaşımı yok.
 
 ## App Privacy (Gizlilik Etiketi)
-- **Veri toplanıyor mu?** → **Hayır, veri toplamıyoruz** (Data Not Collected).
-- Uygulama hiçbir ağ isteği yapmaz; tüm veriler cihazda SwiftData ile saklanır.
-- Takip (tracking) yok. `PrivacyInfo.xcprivacy` projede mevcut (UserDefaults erişim gerekçesi CA92.1).
+> **1.3'ten itibaren geçersiz** — PostHog analitik eklendiği için artık "Data Not Collected" değil. Güncel etiket ve İnceleme Notları için `AppStore/asc-fields.md` içindeki "GÜNCELLEME (1.3)" notlarına bak.
+
+- ~~Veri toplanıyor mu? → Hayır, veri toplamıyoruz (Data Not Collected).~~ (1.0–1.2 için geçerliydi)
+- Çeyiz listesi verisi (eşya, fiyat, foto, isim, tarih) hâlâ yalnızca cihazda; ağa hiç çıkmıyor.
+- Ekran görüntüleme/buton tıklaması gibi kimliksiz kullanım verisi artık PostHog'a (AB) gidiyor. `PrivacyInfo.xcprivacy` güncellendi (`NSPrivacyCollectedDataTypeProductInteraction`, linked: false, tracking: false).
 
 ## Dışa aktarım uyumluluğu (Export Compliance)
 `ITSAppUsesNonExemptEncryption = NO` Info.plist'te ayarlı; App Store Connect bu soruyu sormaz.
@@ -91,7 +93,7 @@ Bunlar üretilmiş dosyalar — elle düzenleme. Ham simülatör kayıtları `Ap
 | 3 | Kategori | **Kategori kategori** ilerle | Mutfaktan yatak odasına, eksik kalan hiçbir şey yok |
 | 4 | Harcamalar | Hesabı **uygulama tutsun** | Toplam, kategori grafiği ve en büyük harcamalar |
 | 5 | Eşya detayı | Her eşyanın **kendi kartı** | Fotoğraf, mağaza, fiyat, hediye eden ve not |
-| 6 | Kapanış | Her şey **telefonunda** kalır | Hesap yok, sunucu yok, reklam yok |
+| 6 | Kapanış | Çeyiz listen **sende** kalır | Eşyaların, fotoğrafların cihazında kalır. Hesap yok, reklam yok. |
 
 Kalın yazılan kelimeler görselde altın renkte. 6. kare ham kayıt istemez: ikon, uygulama adı, üç vaat rozeti ve alttan yükselen bir telefonla kapanış kartı olarak üretilir.
 

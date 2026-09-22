@@ -10,7 +10,7 @@ Ceyizim/
   Info.plist                  ITSAppUsesNonExemptEncryption=NO, tr bölgesi
   PrivacyInfo.xcprivacy       Gizlilik manifestosu (UserDefaults CA92.1)
   Models/                     CeyizCategory, CeyizItem (@Model), CeyizStats (hesaplar)
-  Support/                    AppSettings (anahtarlar, para/tarih formatı), SeedData (hazır liste), CSVExport, DemoData (yalnız DEBUG, ekran görüntüsü verisi)
+  Support/                    AppSettings (anahtarlar, para/tarih formatı), SeedData (hazır liste), CSVExport, DemoData (yalnız DEBUG, ekran görüntüsü verisi), Analytics (PostHog capture)
   Theme/Theme.swift           Palette (aydınlık/karanlık), CategoryColor, Typo (Nunito), kart modifier
   Theme/AccentTheme.swift     Kullanıcının seçtiği vurgu rengi ve ondan türeyen tonlar
   Fonts/                      Nunito (OFL lisanslı) — Info.plist UIAppFonts ile kayıtlı
@@ -46,7 +46,7 @@ xcodebuild -project Ceyizim.xcodeproj -scheme Ceyizim -destination 'platform=iOS
 1. **Signing:** Xcode > Ceyizim target > Signing & Capabilities → Team seç. Bundle ID `com.tahacaliskan.ceyizim` (kişisel Apple Developer hesabın; App Store Connect'te aynı ID ile kayıt oluştur).
 2. **URL'ler:** `Ceyizim/Support/AppSettings.swift` içindeki `privacyPolicyURL` ve `supportURL` gerçek adreslerle değiştir. `AppStore/privacy-policy.md` içeriğini o adreste yayınla (zorunlu).
 3. **App Store Connect:** Yeni uygulama → ad "Çeyizim", birincil dil Türkçe, SKU serbest. `AppStore/metadata.md` içeriğini kopyala.
-4. **Gizlilik etiketi:** "Veri toplanmıyor". Yaş: 4+.
+4. **Gizlilik etiketi:** 1.0–1.2'de "Veri toplanmıyor" idi. 1.3'ten itibaren PostHog analitiği eklendiği için değişti — bkz. `AppStore/asc-fields.md` "App Privacy" bölümü. Yaş: 4+.
 5. **Ekran görüntüleri:** `AppStore/screenshots/*.png` (6.9"). Aşağıdaki akışla üret, sonra yükle.
 6. **Archive:** Xcode > Product > Archive (Any iOS Device) → Distribute → App Store Connect → Upload. Export compliance sorusu Info.plist sayesinde çıkmaz.
 7. **Build'i sürüme bağla**, inceleme notlarını yapıştır, "Submit for Review".
@@ -99,6 +99,12 @@ Sebep şu: serbest renk seçiminin tek gerçek arızası buton üstündeki beyaz
 Vurgudan türeyen altı ton (`accentLight/Dark`, `deepLight/Dark`, `softLight/Dark`) ve kart tonu (`cardTintLight/Dark`), orijinal paletteki ölçülmüş oranlarla üretiliyor. Varsayılan tema (`AccentTheme.brand`) tam olarak eski gülü veriyor: `#D4667F / #B84D67 / #FBE4EA` ve karanlık karşılıkları.
 
 Uygulama tarafında `Palette.rose`, `roseDeep`, `roseSoft` ve `cardSecondary` artık sabit değil, `ThemeStore.shared.accent`'ten hesaplanan property'ler. `ThemeStore` `@Observable` olduğu için vurgu rengi kullanan her ekran tema değişince kendiliğinden yeniden çiziliyor — yeniden başlatma yok. Metin, arka plan ve durum renkleri (`textPrimary`, `background`, `success`, `warning`, `danger`, `gold`) temadan bağımsız sabit; nötr oldukları için her tonla çalışıyorlar.
+
+## Analitik (1.3'ten itibaren)
+
+`Ceyizim/Support/Analytics.swift`, PostHog SDK'sı eklemek yerine onların HTTP capture endpoint'ine (`eu.i.posthog.com`, AB barındırma) doğrudan istek atan minik bir yardımcı. Kimlik, cihazda rastgele üretilip `UserDefaults`'ta saklanan bir UUID — isim, e-posta veya girilen hiçbir veriyle asla eşleşmiyor. Çeyiz listesinin **içeriği** (eşya adı, fiyat, foto, not) hiçbir zaman gönderilmiyor; yalnızca ekran görüntülemeleri ve buton tıklamaları (`item_marked_purchased`, `category_added`, `theme_changed` vb.) izleniyor.
+
+Bu, 1.0–1.2'de verilen "hiç ağ isteği yok / veri toplanmıyor" beyanını değiştiriyor. Yeni bir sürüm gönderirken **App Store Connect'teki App Privacy etiketini ve App Review notlarını güncellemeyi unutma** — ayrıntı ve kopyala-yapıştır metinler `AppStore/asc-fields.md` içinde "GÜNCELLEME (1.3)" başlığı altında.
 
 ## Bilinen sınırlar / 1.1 fikirleri
 - iCloud senkronizasyonu yok (CloudKit + entitlements gerekir).

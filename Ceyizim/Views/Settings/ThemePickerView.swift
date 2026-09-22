@@ -28,6 +28,7 @@ struct ThemePickerView: View {
         .background(Palette.background.ignoresSafeArea())
         .navigationTitle("Tema rengi")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear { Analytics.screen("theme_picker") }
     }
 
     // MARK: - Live preview
@@ -95,7 +96,10 @@ struct ThemePickerView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 5),
                       spacing: 14) {
                 ForEach(AccentTheme.presets, id: \.name) { preset in
-                    Button { apply(preset.theme) } label: {
+                    Button {
+                        apply(preset.theme)
+                        Analytics.track("theme_changed", ["source": "preset", "preset": preset.name])
+                    } label: {
                         VStack(spacing: 6) {
                             Circle()
                                 .fill(preset.theme.accentLight)
@@ -123,6 +127,7 @@ struct ThemePickerView: View {
     private var resetButton: some View {
         Button {
             apply(.brand)
+            Analytics.track("theme_changed", ["source": "reset", "preset": "brand"])
         } label: {
             Label("Varsayılan güle dön", systemImage: "arrow.uturn.backward")
                 .font(Typo.subheadlineSemibold)

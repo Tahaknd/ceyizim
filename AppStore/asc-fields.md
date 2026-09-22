@@ -43,11 +43,19 @@ Cartoon or Fantasy Violence, Realistic Violence, Sexual Content or Nudity, Profa
 
 ## 4. App Privacy
 
-| Alan | Değer |
-|---|---|
-| "Do you collect data from this app?" | **No** → sonuç etiketi **"Data Not Collected"** olur |
+**GÜNCELLEME (1.3, PostHog eklendi):** Artık "Data Not Collected" DEĞİL. Etiketi yeniden doldurman gerekiyor:
 
-Bunu doğrulayan gerekçe: uygulama hiç ağ isteği atmıyor, tüm veri SwiftData ile cihazda; `PrivacyInfo.xcprivacy` zaten projede (tek gerekçe: UserDefaults erişimi, kod `CA92.1`).
+| Soru | Cevap |
+|---|---|
+| "Do you or your third-party partners collect data from this app?" | **Yes** |
+| Data type | **Product Interaction** (App Store Connect'te bu kategoriyi seç) |
+| "Is this data linked to the user's identity?" | **No** — rastgele, cihazda üretilen bir kimlik kullanıyoruz, isim/e-posta/hesapla asla eşleşmiyor |
+| "Is this data used to track users?" | **No** — reklam amaçlı değil, başka şirketlerin uygulama/siteleriyle paylaşılmıyor, ATT gerekmiyor |
+| Purpose | **Analytics** |
+
+Diğer tüm veri türleri (eşya adı, fiyat, fotoğraf, isim, düğün tarihi vb.) hâlâ **cihazda kalıyor**, bunlar için "collect" işaretlemiyoruz — sadece "Product Interaction" (ekran görüntüleme + buton tıklaması) PostHog'a gidiyor.
+
+Kod tarafı: `PrivacyInfo.xcprivacy`'de `NSPrivacyCollectedDataTypeProductInteraction` girişi eklendi (linked: false, tracking: false, purpose: Analytics). `Ceyizim/Support/Analytics.swift` PostHog'un capture endpoint'ine (`eu.i.posthog.com`) doğrudan HTTP isteğiyle event gönderiyor.
 
 ---
 
@@ -110,7 +118,13 @@ Mutlu yuvana giden yolda yanındayız. 🌸
 | Contact — Email | `tahakndcaliskan@gmail.com` |
 | **Notes** | aşağıdaki İngilizce metni yapıştır |
 
-### Review Notes (kopyala-yapıştır — İngilizce olmalı)
+**GÜNCELLEME (1.3):** Aşağıdaki metin artık "no analytics" diyor, ki 1.3'ten itibaren doğru değil — PostHog eklendi. Yeni sürümü göndermeden önce ikinci paragrafı şuna çevir:
+
+```
+No account or login is required or used. All trousseau-list data (item names, prices, notes, photos) is stored only on the device and never leaves it. The app sends anonymous product-interaction analytics (screen views and button taps, tied to a random on-device identifier — never linked to any personal data) to PostHog (EU-hosted) to help us understand feature usage. There is no advertising or tracking SDK, and no in-app purchase.
+```
+
+### Review Notes (1.0/1.1/1.2 için kullanılan eski metin, referans)
 
 ```
 Çeyizim is a fully offline checklist and budget app for preparing a traditional Turkish trousseau ("çeyiz"), which families assemble before a wedding. The app is in Turkish only.
